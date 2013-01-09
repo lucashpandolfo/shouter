@@ -78,6 +78,13 @@ bool Shouter::initialize() {
         printf("Error setting user: %s\n", shout_get_error(shout));
         return 0;
     }
+    
+    shout_set_agent(shout,"Shouter");
+    shout_set_description(shout, stream_description.c_str());
+    shout_set_genre(shout, stream_genre.c_str());
+    shout_set_name(shout, stream_name.c_str());
+    shout_set_url(shout, stream_url.c_str());
+    
 }
 
 void Shouter::start() {

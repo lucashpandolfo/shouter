@@ -44,7 +44,6 @@ size_t SourceFifo::get_data(char* buffer, size_t n) {
 }
 
 std::string SourceFifo::get_metadata(std::string name){
-    std::cout << "Reading metadata from " << metadata_filename << "\n";
     Configurer conf(metadata_filename);
     conf.parse();
   
