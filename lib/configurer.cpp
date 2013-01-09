@@ -22,10 +22,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "sexp_ops.h"
+#include <string>
 
 
-
-Configurer::Configurer(const char* filename) {
+Configurer::Configurer(std::string filename) {
     this->filename = filename;
 }
 

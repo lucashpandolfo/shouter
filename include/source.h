@@ -29,15 +29,7 @@ class Source{
 
     virtual bool initialize()=0;
     virtual size_t get_data(char* buffer, size_t n)=0;
-    std::string get_metadata(std::string name);
-    
-    private:
-    std::string name;
-    std::string artist;
-    std::string album;
-    std::string year;
-    std::string genre;
-    std::string track;
+    virtual std::string get_metadata(std::string name)=0;
 };
 
 #endif // SOURCE_H

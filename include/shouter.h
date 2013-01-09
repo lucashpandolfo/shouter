@@ -31,6 +31,7 @@ class Shouter{
     bool initialize();
     void start();
     void stop();
+    void refresh_metadata();
    ~Shouter();
 
     static Shouter* create_from_file(const char* filename);
@@ -39,10 +40,13 @@ class Shouter{
 
     bool connect();
 
+    void do_refresh_metadata();
+    
     Source* source;
     shout_t* shout;
 
     bool stop_requested;
+    bool refresh_metadata_requested;
     
     std::string hostname;
     std::string password;

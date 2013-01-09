@@ -26,7 +26,7 @@
 
 class Configurer{
 public:
-  Configurer(const char* filename);
+  Configurer(std::string filename);
   Configurer operator=(Configurer &conf);
 
   bool parse();

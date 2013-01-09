@@ -84,10 +84,19 @@ void Shouter::start() {
     char buffer[4096];
     size_t read,ret;
 
+    stop_requested=false;
+    refresh_metadata();
 
     if (shout_open(shout) == SHOUTERR_SUCCESS) {
         printf("Connected to server...\n");
-        while (1) {
+        while (!stop_requested) {
+
+            if(refresh_metadata_requested) {
+                refresh_metadata_requested=false;
+                log(0,"Refreshing metadata.....");
+                do_refresh_metadata();
+            }
+
             read = source->get_data(buffer, 4096);
 
             if (read > 0) {
@@ -107,8 +116,39 @@ void Shouter::start() {
     }
 }
 
-void Shouter::stop() {
+void Shouter::refresh_metadata() {
 
+    refresh_metadata_requested = true;
+}
+
+void Shouter::do_refresh_metadata() {
+    shout_metadata_t* metadata = shout_metadata_new();
+    if(metadata != NULL) {
+
+        std::string title = source->get_metadata("title");
+        std::string artist = source->get_metadata("artist");
+        std::string length = source->get_metadata("length");
+        std::string album = source->get_metadata("album");
+
+        std::string song = artist;
+
+        if(!song.empty())
+            song += " - ";
+
+        song += title;
+
+        shout_metadata_add(metadata,"song", song.c_str());
+
+        shout_set_metadata(shout,metadata);
+
+        std::cout << "song: " << song << "\n";
+
+        shout_metadata_free(metadata);
+    }
+}
+
+void Shouter::stop() {
+    stop_requested=true;
 }
 
 Shouter::~Shouter() {

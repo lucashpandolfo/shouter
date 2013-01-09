@@ -30,7 +30,7 @@ public:
     bool initialize();
 
     size_t get_data(char* buffer, size_t n);
-
+    std::string get_metadata(std::string name);
     ~SourceFifo();
 
     private:

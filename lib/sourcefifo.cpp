@@ -23,10 +23,11 @@
 
 #include <fcntl.h>
 #include <unistd.h>
+#include "configurer.h"
 
 SourceFifo::SourceFifo(std::string fifo_name, std::string metadata_filename) {
     this->fifo_name = fifo_name;
-    this-> metadata_filename = metadata_filename;
+    this->metadata_filename = metadata_filename;
 }
 
 bool SourceFifo::initialize() {
@@ -40,6 +41,16 @@ size_t SourceFifo::get_data(char* buffer, size_t n) {
     if(fifo<0)
       return 0;
     return read(fifo, buffer, n);
+}
+
+std::string SourceFifo::get_metadata(std::string name){
+    std::cout << "Reading metadata from " << metadata_filename << "\n";
+    Configurer conf(metadata_filename);
+    conf.parse();
+  
+    std::string meta;
+    conf.read_string(name, meta);
+    return meta;
 }
 
 SourceFifo::~SourceFifo() {
