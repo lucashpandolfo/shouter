@@ -21,19 +21,25 @@
 #define CONFIGURER_H
 
 #include <string>
+#include <vector>
+#include "sexp.h"
 
 class Configurer{
+public:
   Configurer(const char* filename);
+  Configurer operator=(Configurer &conf);
 
-  bool read_string(const char* name, std::string &variable);
-  bool read_int(const char *name, std::string &variable);
-  bool read_enum(const char *name, int &variable);
+  bool parse();
+  
+  bool read_string(std::string name, std::string &variable);
+  bool read_int(std::string name, int &variable);
 
+  ~Configurer();
 private:
+  std::vector<std::string> split(std::string string);
+    bool retrieve_string(std::vector< std::string > names, std::vector< sexp_t* > roots, std::string& string);
   
-  
-  
-  sexp_t *root;
+  std::vector<sexp_t*> roots;
   std::string filename;
 };
 

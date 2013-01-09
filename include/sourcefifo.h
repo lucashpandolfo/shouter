@@ -17,30 +17,28 @@
 */
 
 
-#include "streamfifo.h"
+#ifndef SOURCEFIFO_H
+#define SOURCEFIFO_H
 
-#include "log.h"
+#include "source.h"
 
-#include <fcntl.h>
-#include <unistd.h>
 
-StreamFifo::StreamFifo(const char* fifo_name, const char* metadata_filename) {
-    this->fifo_name = fifo_name;
-    this-> metadata_filename = metadata_filename;
-}
+class SourceFifo: public Source{
+public:
+    SourceFifo(std::string fifo_name, std::string metadata_filename);
 
-bool StreamFifo::initialize() {
-    fifo = open(fifo_name.c_str(), O_RDONLY);
-    log(0, "Could not open fifo " + fifo_name + " for reading");
-    return fifo > 0;
-}
+    bool initialize();
 
-size_t StreamFifo::get_data(char* buffer, size_t n) {
-    return read(fifo, buffer, n);
-}
+    size_t get_data(char* buffer, size_t n);
 
-StreamFifo::~StreamFifo() {
-    if(fifo>0)
-        close(fifo);
-    fifo = -1;
-}
+    ~SourceFifo();
+
+    private:
+
+    int fifo;
+
+    std::string fifo_name;
+    std::string metadata_filename;
+};
+
+#endif // SOURCEFIFO_H

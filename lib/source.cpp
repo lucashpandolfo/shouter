@@ -17,27 +17,5 @@
 */
 
 
-#ifndef STREAMFIFO_H
-#define STREAMFIFO_H
+#include "source.h"
 
-#include "stream.h"
-
-
-class StreamFifo: public Stream{
-    StreamFifo(const char* fifo_name, const char* metadata_filename);
-
-    bool initialize();
-
-    size_t get_data(char* buffer, size_t n);
-
-    ~StreamFifo();
-
-    private:
-
-    int fifo;
-
-    std::string fifo_name;
-    std::string metadata_filename;
-};
-
-#endif // STREAMFIFO_H

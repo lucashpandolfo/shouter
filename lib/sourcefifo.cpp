@@ -17,27 +17,33 @@
 */
 
 
-#ifndef STREAM_H
-#define STREAM_H
+#include "sourcefifo.h"
 
+#include "log.h"
+
+#include <fcntl.h>
 #include <unistd.h>
-#include <string>
 
-class Stream{
+SourceFifo::SourceFifo(std::string fifo_name, std::string metadata_filename) {
+    this->fifo_name = fifo_name;
+    this-> metadata_filename = metadata_filename;
+}
 
-    public:
-    Stream();
-    bool initialize();
-    virtual size_t get_data(char* buffer, size_t n)=0;
-    std::string get_metadata(std::string name);
-    
-    private:
-    std::string name;
-    std::string artist;
-    std::string album;
-    std::string year;
-    std::string genre;
-    std::string track;
-};
+bool SourceFifo::initialize() {
+    fifo = open(fifo_name.c_str(), O_RDONLY);
+    if(fifo<0)
+      log(0, "Could not open fifo " + fifo_name + " for reading");
+    return fifo > 0;
+}
 
-#endif // STREAM_H
+size_t SourceFifo::get_data(char* buffer, size_t n) {
+    if(fifo<0)
+      return 0;
+    return read(fifo, buffer, n);
+}
+
+SourceFifo::~SourceFifo() {
+    if(fifo>0)
+        close(fifo);
+    fifo = -1;
+}

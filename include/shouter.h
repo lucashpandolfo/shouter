@@ -20,7 +20,7 @@
 #ifndef SHOUTER_H
 #define SHOUTER_H
 
-#include "stream.h"
+#include "source.h"
 #include "shout/shout.h"
 
 class Shouter{
@@ -39,7 +39,7 @@ class Shouter{
 
     bool connect();
 
-    Stream* stream;
+    Source* source;
     shout_t* shout;
 
     bool stop_requested;

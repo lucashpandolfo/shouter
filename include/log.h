@@ -7,9 +7,7 @@
 #define LOG_LEVEL_DEBUG  1
 #define LOG_LEVEL_ERROR  2
 
-void log(int level, std::string message){
-    std::cout << message << "\n";
-}
+void log(int level, std::string message);
 
 
 #endif
