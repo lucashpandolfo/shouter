@@ -1,0 +1,9 @@
+#!/bin/bash
+
+trap "echo 'Exiting....' ; exit" SIGINT SIGHUP SIGTERM
+
+while [ true ]
+do
+   arecord -D hw:0 -fcd -t wav 2> /dev/null | lame --preset medium - - > song-fifo.fifo
+   echo "Interrupted: Restarting"
+done

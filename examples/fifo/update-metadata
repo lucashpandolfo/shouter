@@ -1,0 +1,14 @@
+#!/bin/bash
+
+METADATA_FILE=~/workspace/shouter/examples/fifo/metadata.lsp
+
+PID=$(pgrep shouter)
+
+echo "(artist \"${1}\")" >  ${METADATA_FILE}
+echo "(title \"${2}\")"  >> ${METADATA_FILE}
+echo "(album \"${3}\")"  >> ${METADATA_FILE}
+echo "(length \"${4}\")" >> ${METADATA_FILE}
+
+kill -s SIGUSR1 ${PID}
+
+
