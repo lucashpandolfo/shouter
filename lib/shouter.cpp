@@ -137,12 +137,14 @@ void Shouter::do_refresh_metadata() {
         std::string length = source->get_metadata("length");
         std::string album = source->get_metadata("album");
 
-        std::string song = artist;
+	if(album.empty())
+	    album="NO ALBUM";
+	if(title.empty())
+	    title="NO TITLE";
+	if(artist.empty())
+	    artist="NO ARTIST";
 
-        if(!song.empty())
-            song += " - ";
-
-        song += title;
+        std::string song = album + " - " + title + " - " + artist;
 
         shout_metadata_add(metadata,"song", song.c_str());
 
