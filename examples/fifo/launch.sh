@@ -1,14 +1,15 @@
 #!/bin/bash
 
 function close_all {
-    killall -9 alsa-capture
-    killall -SIGINT shouter
+    kill -9 $CAPTURE_PID
 }
 
 trap close_all SIGINT 
 
 
-./alsa-capture &
+eval "./alsa-capture &"
+
+CAPTURE_PID=$!
 
 sleep 1
 
