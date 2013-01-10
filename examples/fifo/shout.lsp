@@ -8,7 +8,7 @@
         (hostname  "87.117.201.152")
         (port      19508)
         (user      "fiubalaagita")
-        (password  "fiubalaagita")
+        (password  "tryme")
         (protocol  'icy)
         (mountpoint "/stream.mp3"))
 
