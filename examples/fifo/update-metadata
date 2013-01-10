@@ -1,6 +1,6 @@
 #!/bin/bash
 
-METADATA_FILE=~/workspace/shouter/examples/fifo/metadata.lsp
+METADATA_FILE=$(dirname $0)/metadata.lsp
 
 PID=$(pgrep shouter)
 
